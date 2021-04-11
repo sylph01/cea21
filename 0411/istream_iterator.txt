@@ -1,0 +1,5 @@
+std::istream_iterator is a single-pass input iterator that reads successive objects of type T from the std::basic_istream object for which it was constructed, by calling the appropriate operator>>. The actual read operation is performed when the iterator is incremented, not when it is dereferenced. The first object is read when the iterator is constructed. Dereferencing only returns a copy of the most recently read object.
+
+The default-constructed std::istream_iterator is known as the end-of-stream iterator. When a valid std::istream_iterator reaches the end of the underlying stream, it becomes equal to the end-of-stream iterator. Dereferencing or incrementing it further invokes undefined behavior.
+
+A typical implementation of std::istream_iterator holds two data members: a pointer to the associated std::basic_istream object and the most recently read value of type T.

@@ -1,0 +1,42 @@
+sylph01@millomande:~/cea21/0411$ g++ find_all.cpp
+find_all.cpp:11:38: error: conflicting declaration ‘V c’
+   11 | vector<Iterator<C>> find_all(C& c, V c){
+      |                                    ~~^
+find_all.cpp:11:33: note: previous declaration as ‘C& c’
+   11 | vector<Iterator<C>> find_all(C& c, V c){
+      |                              ~~~^
+find_all.cpp: In function ‘std::vector<typename C::iterator> find_all(C&)’:
+find_all.cpp:14:15: error: ‘v’ was not declared in this scope
+   14 |     if (*p == v)
+      |               ^
+find_all.cpp: In function ‘void test()’:
+find_all.cpp:21:29: error: no matching function for call to ‘find_all(std::string&, char)’
+   21 |   auto psm = find_all(m, 'a');
+      |                             ^
+find_all.cpp:11:21: note: candidate: ‘template<class C, class V> std::vector<typename C::iterator> find_all(C&)’
+   11 | vector<Iterator<C>> find_all(C& c, V c){
+      |                     ^~~~~~~~
+find_all.cpp:11:21: note:   template argument deduction/substitution failed:
+find_all.cpp:21:29: note:   candidate expects 1 argument, 2 provided
+   21 |   auto psm = find_all(m, 'a');
+      |                             ^
+find_all.cpp:25:31: error: no matching function for call to ‘find_all(std::__cxx11::list<double>&, double)’
+   25 |   auto psld = find_all(ld, 1.1);
+      |                               ^
+find_all.cpp:11:21: note: candidate: ‘template<class C, class V> std::vector<typename C::iterator> find_all(C&)’
+   11 | vector<Iterator<C>> find_all(C& c, V c){
+      |                     ^~~~~~~~
+find_all.cpp:11:21: note:   template argument deduction/substitution failed:
+find_all.cpp:25:31: note:   candidate expects 1 argument, 2 provided
+   25 |   auto psld = find_all(ld, 1.1);
+      |                               ^
+find_all.cpp:29:36: error: no matching function for call to ‘find_all(std::vector<std::__cxx11::basic_string<char> >&, const char [6])’
+   29 |   auto psvs = find_all (vs, "green");
+      |                                    ^
+find_all.cpp:11:21: note: candidate: ‘template<class C, class V> std::vector<typename C::iterator> find_all(C&)’
+   11 | vector<Iterator<C>> find_all(C& c, V c){
+      |                     ^~~~~~~~
+find_all.cpp:11:21: note:   template argument deduction/substitution failed:
+find_all.cpp:29:36: note:   candidate expects 1 argument, 2 provided
+   29 |   auto psvs = find_all (vs, "green");
+      | 
