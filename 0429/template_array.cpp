@@ -20,6 +20,12 @@ struct array{
   const_reference operator[](size_type i) const {
     return storage[i];
   }
+
+  void fill(T const & u){
+    for(std::size_t i = 0; i != N; ++i){
+      storage[i] = u;
+    }
+  }
 };
 
 template <typename Array>
@@ -42,10 +48,14 @@ int main(){
   };
   */
 
-  array<int, 3> a3 = {1,2,3};
+  array<int, 3> i3 = {1,2,3};
   array<double, 5> d5 = {0.1, 0.2, 0.3, 0.4, 0.5};
+  array<int, 9> i9;
 
-  p(a3[2]);
+  p(i3[2]);
   d5[2] = 1.3;
   print(d5);
+  i9.fill(100);
+  i9[0] = 1;
+  print(i9);
 }
