@@ -30,11 +30,52 @@ struct array_iterator {
     return copy;
   }
 
+  array_iterator &operator +=(std::size_t n){
+    // this modifies the iterator directly
+    i += n;
+    return *this;
+  }
+  array_iterator operator +(std::size_t n) const {
+    // this makes a copy, then calls the += operator that modifies the copied iterator
+    auto copy = *this;
+    copy += n;
+    return copy;
+  }
+
+  array_iterator &operator -=(std::size_t n){
+    // this modifies the iterator directly
+    i -= n;
+    return *this;
+  }
+  array_iterator operator -(std::size_t n) const {
+    // this makes a copy, then calls the += operator that modifies the copied iterator
+    auto copy = *this;
+    copy -= n;
+    return copy;
+  }
+
   bool operator ==(array_iterator const & right){
     return i == right.i;
   }
   bool operator !=(array_iterator const & right){
     return i != right.i;
+  }
+
+  typename Array::reference operator[](std::size_t n) const {
+    return *(*this + n);
+  }
+
+  bool operator < (array_iterator const & right) const {
+    return i < right.i;
+  }
+  bool operator <= (array_iterator const & right) const {
+    return i <= right.i;
+  }
+  bool operator > (array_iterator const & right) const {
+    return i > right.i;
+  }
+  bool operator >= (array_iterator const & right) const {
+    return i >= right.i;
   }
 };
 
@@ -88,4 +129,16 @@ int main(){
   for (auto iter2 = a.begin(); iter2 != a.end(); ++iter2){
     p(*iter2);
   }
+
+  p("-----");
+
+  auto iter3 = a.begin();
+  p(*(iter3 + 1));
+  p(*(iter3 + 2));
+  p(*(iter3 + 3));
+
+  p("-----");
+
+  auto iter4 = a.end();
+  p(*(iter4 - 1));
 }
