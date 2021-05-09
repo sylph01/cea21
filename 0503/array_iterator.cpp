@@ -143,6 +143,15 @@ struct array {
   reference operator[](size_type i){
     return storage[i];
   }
+  reference at(std::size_t n){
+    if (n >= size()){
+      throw std::out_of_range("Error: out of range");
+    }
+    return storage[n];
+  }
+  size_type size(){
+    return N;
+  }
 };
 
 template <typename T>
@@ -179,4 +188,12 @@ int main(){
 
   auto iter4 = a.end();
   p(*(iter4 - 1));
+
+  // auto i = a[1019];
+  // p(i);
+  try {
+    p(a.at(1019));
+  } catch (std::out_of_range err) {
+    std::cout << "Error caught: " << err.what() << std::endl;
+  }
 }
