@@ -79,6 +79,43 @@ struct array_iterator {
   }
 };
 
+template <typename Array>
+struct array_const_iterator
+{
+  Array const & a; // note that the array is const; const_iterator means that the iterator itself can be changed but the object cannot be changed
+  std::size_t i;
+
+  array_const_iterator(Array const & a, std::size_t i) : a(a), i(i) {}
+
+  array_const_iterator(typename array_iterator<Array>::iterator const & iter) : a(iter.a), i(iter.i) {}
+
+  array_const_iterator & operator++(){
+    ++i;
+    return *this;
+  }
+  array_const_iterator operator++(int){
+    array_const_iterator copy = *this;
+    ++*this;
+    return copy;
+  }
+  array_const_iterator & operator --(){
+    --i;
+    return *this;
+  }
+  array_const_iterator operator --(int){
+    array_const_iterator copy = *this;
+    --*this;
+    return copy;
+  }
+
+  typename Array::const_reference operator *(){
+    return a[i];
+  }
+  typename Array::const_reference operator[](std::size_t n) const {
+    return *(*this + n);
+  }
+};
+
 template <typename T, std::size_t N>
 struct array {
   T storage[N];
@@ -90,6 +127,7 @@ struct array {
 
   // same as array_iterator<array<T,N>>
   using iterator = array_iterator<array>;
+  using const_iterator = array_const_iterator<array>;
 
   iterator begin(){
     return array_iterator(*this, 0);
