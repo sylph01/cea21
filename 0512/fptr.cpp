@@ -10,6 +10,8 @@ int main(){
   using f_pointer = f_type *;
 
   f_pointer ptr = &f;
+  int (*ptr2)(int) = &f;
 
   (*ptr)(123);
+  (*ptr2)(234);
 }
