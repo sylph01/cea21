@@ -16,8 +16,12 @@ int main(){
 
   C object;
 
+  auto obj_ptr = &object;
+
   std::cout << object.*x_ptr << std::endl;
   std::cout << object.*y_ptr << std::endl;
 
   std::cout << (object.*f_ptr)(0) << std::endl;
+
+  std::cout << obj_ptr->*x_ptr << std::endl;
 }
