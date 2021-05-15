@@ -28,6 +28,18 @@ public:
     resize(size, value);
   }
 
+  /*
+  template<typename InputIterator>
+  vector(InputIterator first, InputIterator last, const Allocator & = Allocator()){
+    reserve(std::distance(first, last));
+    for(auto i = first; i != last; ++i){
+      push_back(*i);
+    }
+  }
+
+  vector(std::initializer_list<value_type> init, const Allocator & alloc = Allocator()) : vector(std::begin(init), std::end(init), alloc) {}
+  */
+
   ~vector(){
     clear();
     deallocate();
@@ -103,6 +115,22 @@ public:
     }
     construct(last, value);
     ++last;
+  }
+
+  void shrink_to_fit(){
+    if (size() == capacity())
+      return;
+
+    auto ptr = allocate(size());
+    auto current_size = size();
+    for(auto raw_ptr = ptr, iter = begin(), iter_end = end(); iter != iter_end; ++iter, ++raw_ptr){
+      construct(raw_ptr, *iter);
+    }
+    clear();
+    deallocate();
+    first = ptr;
+    last = ptr + current_size;
+    reserved_last = last;
   }
 
   iterator begin() noexcept {
@@ -229,7 +257,7 @@ void p_content(const Vector &v){
   for(auto i = v.begin(); i != v.end(); ++i){
     std::cout << *i << std::endl;
   }
-  std::cout << "cap: " << v.capacity() << std::endl << std::endl;
+  std::cout << "cap: " << v.capacity() << std::endl;
 }
 /*
   this would screw up if type signature was void p_content(Vector v)
@@ -245,5 +273,9 @@ int main(){
   v.resize(5);
   v.push_back(6);
 
+  p_content(v);
+  std::cout << std::endl;
+
+  v.shrink_to_fit();
   p_content(v);
 }
