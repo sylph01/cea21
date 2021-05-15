@@ -14,6 +14,11 @@ struct cin_iterator
   // constructor
   cin_iterator(bool fail = false) : fail(fail) { ++*this; }
 
+  /*
+  reference operator*() {
+    return value;
+  }
+  */
   // return cached value
   // const value_type operator*() const {
   // const reference operator*() const { // this doesn't
