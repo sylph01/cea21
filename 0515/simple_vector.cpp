@@ -28,7 +28,6 @@ public:
     resize(size, value);
   }
 
-  /*
   template<typename InputIterator>
   vector(InputIterator first, InputIterator last, const Allocator & = Allocator()){
     reserve(std::distance(first, last));
@@ -38,7 +37,6 @@ public:
   }
 
   vector(std::initializer_list<value_type> init, const Allocator & alloc = Allocator()) : vector(std::begin(init), std::end(init), alloc) {}
-  */
 
   ~vector(){
     clear();
@@ -268,6 +266,15 @@ collect2: error: ld returned 1 exit status
 */
 
 int main(){
+  vector<int> v = {1,2,3,4,5};
+  vector<int> v2(v.begin(), v.end());
+  p_content(v);
+  p_content(v2);
+
+  std::string s{"HogeFuga"};
+  vector<std::string> vs(5, s);
+  p_content(vs);
+  /*
   vector<int> v(10, 1);
   v[2] = 99;
   v.resize(5);
@@ -278,4 +285,5 @@ int main(){
 
   v.shrink_to_fit();
   p_content(v);
+  */
 }
