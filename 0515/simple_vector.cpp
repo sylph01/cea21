@@ -105,7 +105,34 @@ public:
     }
     last = first + r.size();
   }
-  vector & operator =(const vector & x);
+  vector & operator=(const vector & r){
+    if (this == &r)
+      return *this;
+
+    if (size() == r.size()){
+      std::copy(r.begin(), r.end(), begin());
+    } else {
+      if (capacity() >= r.size()){
+        std::cout << "capacity is larger than r.size\n";
+        // copy effective elements
+        std::copy(r.begin(), r.begin() + r.size(), begin());
+        // then copy generate
+        for (auto src_iter = r.begin() + r.size(), src_end = r.end(); src_iter != src_end; ++src_iter, ++last) {
+          std::cout << "constructing with " << *src_iter << "\n";
+          construct(last, *src_iter);
+        }
+      } else {
+        std::cout << "capacity is smaller than r.size\n";
+        clear();
+        // destroy_all();
+        reserve(r.size());
+        for(auto src_iter = r.begin(), src_end = r.end(), dest_iter = begin(); src_iter != src_end; ++src_iter, ++dest_iter, ++last) {
+          construct(dest_iter, *src_iter);
+        }
+      }
+    }
+    return *this;
+  }
 
   void push_back(const_reference value){
     if (size() + 1 > capacity()){
@@ -182,12 +209,12 @@ public:
   }
   reference at(size_type i){
     if (i >= size())
-      throw std::out_of_range("index is our of range.");
+      throw std::out_of_range("index is out of range.");
     return first[i];
   }
   const_reference at(size_type i) const {
     if (i >= size())
-      throw std::out_of_range("index is our of range.");
+      throw std::out_of_range("index is out of range.");
     return first[i];
   }
 
@@ -275,9 +302,15 @@ int main(){
   vector<int> v = {1,2,3,4,5};
   vector<int> v2(v.begin(), v.end());
   vector<int> v3(v);
+  vector<int> v4(3), v5(10);
+
   p_content(v);
   p_content(v2);
   p_content(v3);
+  v4 = v;
+  p_content(v4);
+  v5 = v;
+  p_content(v5);
 
   std::string s{"HogeFuga"};
   vector<std::string> vs(5, s);
