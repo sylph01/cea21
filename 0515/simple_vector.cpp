@@ -98,7 +98,13 @@ public:
   }
 
   // copy
-  vector(const vector &x);
+  vector(const vector &r) : alloc(traits::select_on_container_copy_construction(r.alloc)) {
+    reserve(r.size());
+    for (auto dest = first, src = r.begin(), last = r.end(); src != last; ++dest, ++src){
+      construct(dest, *src);
+    }
+    last = first + r.size();
+  }
   vector & operator =(const vector & x);
 
   void push_back(const_reference value){
@@ -268,8 +274,10 @@ collect2: error: ld returned 1 exit status
 int main(){
   vector<int> v = {1,2,3,4,5};
   vector<int> v2(v.begin(), v.end());
+  vector<int> v3(v);
   p_content(v);
   p_content(v2);
+  p_content(v3);
 
   std::string s{"HogeFuga"};
   vector<std::string> vs(5, s);
