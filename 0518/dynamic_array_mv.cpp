@@ -39,6 +39,12 @@ public:
     }
     return *this;
   }
+
+  // move constructor
+  dynamic_array(dynamic_array && r) : first(r.first), last(r.last){
+    r.first = nullptr;
+    r.last  = nullptr;
+  }
 };
 
 template <typename T>
@@ -51,7 +57,10 @@ int main(){
   dynamic_array<int> b(5);
   a[0] = 1;
   a[1] = 2;
-  b = a;
+  b = a; // this should invoke copy assignment
+
+  dynamic_array<int> dest(std::move(a)); // then a is moved into dest
 
   print_all(b);
+  print_all(dest);
 }
