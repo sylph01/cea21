@@ -45,6 +45,20 @@ public:
     r.first = nullptr;
     r.last  = nullptr;
   }
+  dynamic_array & operator=(dynamic_array && r){
+    // release storage of destination object
+    delete first;
+    // move ownership to destination object
+    first = r.first;
+    last  = r.last;
+    // release ownership from source object
+    r.first = nullptr;
+    r.last  = nullptr;
+
+    return *this;
+  }
+  // note that move constructors take a *non-const* rvalue reference;
+  // to do a move, you have to release ownership from source object
 };
 
 template <typename T>
@@ -59,7 +73,7 @@ int main(){
   a[1] = 2;
   b = a; // this should invoke copy assignment
 
-  dynamic_array<int> dest(std::move(a)); // then a is moved into dest
+  dynamic_array<int> dest = std::move(a); // then a is moved into dest
 
   print_all(b);
   print_all(dest);
